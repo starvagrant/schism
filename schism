@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while true;
+do
+
+play ~/Music/Bash/BlasterMaster7.ogg
+play ~/Music/Bash/SuperMario3BowserBattle.mp3
+play ~/Music/Bash/WilyFortress.mp3
+
+done
