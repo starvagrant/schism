@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ $1 == "init" ];
+then
+    if [ -d ~/.schism ]
+    then
+        echo "~/.schism already exists"
+    else
+        mkdir ~/.schism
+    fi
+fi
+
 while true;
 do
 
