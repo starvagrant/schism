@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ -d ~/.schism ]
+then
+echo "$(basename ${0}) ${@}" >> ~/.schism/schism_history
+fi
+
 if [ $1 == "init" ];
 then
     if [ -d ~/.schism ]
