@@ -13,6 +13,13 @@ then
     else
         mkdir ~/.schism
     fi
+    if [ -d ~/.schism/time ]
+    then
+        echo "~/.schism/time already exists"
+    else
+        mkdir -p ~/.schism/time
+    fi
+
 fi
 
 if [ $1 == "play" ];
@@ -32,4 +39,11 @@ then
 
 ls -Q ~/Music/Bash/Warcraft\ II/* | xargs play
 
+fi
+
+if [ $1 == "ed" ];
+then
+
+cd ~/.schism/time
+ed "${2}"
 fi
