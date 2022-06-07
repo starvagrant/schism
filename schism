@@ -24,21 +24,9 @@ fi
 
 if [ $1 == "play" ];
 then
-while true;
-do
-
-play ~/Music/Bash/BlasterMaster7.ogg
-play ~/Music/Bash/SuperMario3BowserBattle.mp3
-play ~/Music/Bash/WilyFortress.mp3
-
-done
-fi
-
-if [ $1 == "clean" ];
-then
-
-ls -Q ~/Music/Bash/Warcraft\ II/* | xargs play
-
+    shift
+    schism-play ${@}
+    exit 0
 fi
 
 if [ $1 == "ed" ];

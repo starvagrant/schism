@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -eq 0 ];
+then
+
+while true;
+do
+
+play ~/Music/Bash/BlasterMaster7.ogg
+play ~/Music/Bash/SuperMario3BowserBattle.mp3
+play ~/Music/Bash/WilyFortress.mp3
+
+done
+
+fi
+
+if [ $1 == "clean" ];
+then
+
+ls -Q ~/Music/Bash/Warcraft\ II/* | xargs play
+
+fi
