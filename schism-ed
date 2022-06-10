@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cd ~/.schism/time
+
+if [ $# -eq 0 ]
+then
+    ed "freewrite-`date`.txt"
+elif [ $1 == "todo" ]
+then
+    date="`date +%Y-%m-%d`"
+    cp ~/.schism/time/templates/todo.yml ~/.schism/time/todo$date.yml
+    ed ~/.schism/time/todo$date.yml
+else
+    ed ${@}
+fi
