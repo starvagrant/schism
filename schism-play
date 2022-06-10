@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -eq 0 ];
+if [ $# -eq 0 ] || [ $1 == "game" ];
 then
 
 while true;
@@ -20,3 +20,13 @@ then
 ls -Q ~/Music/Bash/Warcraft\ II/* | xargs play
 
 fi
+
+if [ $! == "relax" ];
+then
+
+while true;
+do
+
+play ~/Music/Bash/relax.mp3
+
+done
