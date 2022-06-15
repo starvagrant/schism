@@ -1,4 +1,4 @@
-# schism
+# Schism (Summary)
 The purpose of schism is to serve as an organizer
 for those with certain memory and attention contraints.
 
@@ -23,3 +23,25 @@ out with). I've heard programs such as ed called "user-
 hostile" which is ridiculuos. Ed's design was dictated
 by the need for an editor before monitors replaced printers
 as the user interface. It has some delightful features.
+
+## Installing and Using
+
+Right now the schism project is in a "It works on my computer,
+it may work on yours. As of 2022-06-15, it has the following
+dependancies:
+
+Bash (it's a shell script)
+The _play_ command (from the Soxi package)
+The _ed_ text editor (often times installed by default on linux)
+Some songs. The play feature needs manual selection of your own songs.
+
+I'm thinking of allowing the user to select between nano,ed,vim,and
+emacs, provided they are provided on their system.
+
+## Pull Requessts
+
+The current stage of the project is currently firmly in the "I'm
+making something I find useful for me here is the code. This code
+is meant to provide a focused and distractions free environment
+for it's user(s). So anyone thinks the have a handle on that, I
+am interested to see what you come up with.
