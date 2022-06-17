@@ -3,6 +3,7 @@
 if [ -d ~/.schism ]
 then
 echo "$(basename ${0}) ${@}" >> ~/.schism/schism_history
+date +%s >> ~/.schism/schism_history
 fi
 
 if [ $1 == "init" ];
