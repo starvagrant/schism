@@ -29,7 +29,13 @@ class TestCmd(cmd.Cmd):
         arg_list = args.split();
         with open('links/current.yml') as f:
             yml = yaml.load(f, Loader=yaml.FullLoader)
+            print(arg_list)
             print(repr(yml))
+            for item in yml:
+                if arg_list[0] in item.keys():
+                    print(arg_list[0])
+                else:
+                    print("Not: " + arg_list[0])
 
 if __name__ == '__main__':
     cli = TestCmd()
