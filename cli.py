@@ -2,6 +2,7 @@
 
 import cmd
 import subprocess
+import yaml
 
 class TestCmd(cmd.Cmd):
     prompt = "test> "
@@ -23,6 +24,12 @@ class TestCmd(cmd.Cmd):
         #process = subprocess.run(args, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         #print(process.stdout)
         #print(process.stderr)
+
+    def do_load(self, args):
+        arg_list = args.split();
+        with open('links/current.yml') as f:
+            yml = yaml.load(f, Loader=yaml.FullLoader)
+            print(repr(yml))
 
 if __name__ == '__main__':
     cli = TestCmd()
