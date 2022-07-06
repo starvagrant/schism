@@ -55,6 +55,9 @@ class TestCmd(cmd.Cmd):
             yaml.dump(self.yaml, f, Dumper=yaml.Dumper)
             print(repr(self.yaml))
 
+    def do_play(self, args):
+        process=subprocess.run(['play', '~/Music/Bash/relax.mp3'], universal_newlines=True)
+
 if __name__ == '__main__':
     cli = TestCmd()
     cli.cmdloop()
