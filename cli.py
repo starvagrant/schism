@@ -56,7 +56,32 @@ class TestCmd(cmd.Cmd):
             print(repr(self.yaml))
 
     def do_play(self, args):
-        process=subprocess.run(['play', '~/Music/Bash/relax.mp3'], universal_newlines=True)
+        arg = args.split(' ')
+        print(arg)
+        run_list = arg[0]
+        if len(arg) < 2:
+            arg.append(0)
+            print(arg)
+        else:
+            print(arg)
+        if int(arg[1]) == 0:
+            while True:
+                song = '~/Music/Bash/' + arg[0] + '.mp3'
+                process=subprocess.run(['play', song])
+
+        for x in range(int(arg[1])):
+            if arg[0] == 'relax':
+                process=subprocess.run(['play', '~/Music/Bash/relax.mp3'], universal_newlines=True)
+                print('relax!!')
+            if arg[0] == 'game':
+                process=subprocess.run(['play', '~/Music/Bash/BlasterMaster7.ogg', '~/Music/Bash/SuperMario3BowserBattle.mp3', '~/Music/Bash/WilyFortress.mp3'])
+                print('Blaster SM3 Wily')
+            if arg[0] == 'venus':
+                process=subprocess.run(['play', '~/Music/Bash/venus.mp3'])
+                print('Venus')
+            if arg[0] == 'wakeup':
+                process=subprocess.run(['play', '~/Music/Bash/wakeup.mp3'])
+                print('wakuep')
 
 if __name__ == '__main__':
     cli = TestCmd()
