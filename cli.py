@@ -83,6 +83,13 @@ class TestCmd(cmd.Cmd):
                 process=subprocess.run(['play', '~/Music/Bash/wakeup.mp3'])
                 print('wakuep')
 
+    def do_display(self,args):
+        print(self.yaml.keys())
+
+        for key in self.yaml.keys():
+            print("\033[33m ", self.yaml[key], "\033[0m")
+
+
 if __name__ == '__main__':
     cli = TestCmd()
     cli.cmdloop()
