@@ -42,6 +42,8 @@ class TestCmd(cmd.Cmd):
             print("Command error message: " , command.message)
             try:
                 task = self.yaml['Undone'][key].pop(pos)
+                if None in self.yaml['Done'][key]:
+                    self.yaml['Done'][key].pop(0)
                 self.yaml['Done'][key].append(task)
             except IndexError:
                 print ("Undone list",key," does not contain ", pos + 1 , "items")
