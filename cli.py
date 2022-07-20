@@ -4,8 +4,16 @@ import cmd
 import subprocess
 import yaml
 
+DANGER = "\033[31m"     #red
+CAUTION = "\033[33m"    #yellow
+INFO = "\033[36m"       #cyan
+GOOD = "\033[32m"       #green
+ERROR = "\033[34m"      #blue
+WARNING = "\033[35m"    #purple
+END = "\033[0m"         #white
+
 class TestCmd(cmd.Cmd):
-    prompt = "schism> "
+    prompt = GOOD + " schism> " + END
 
     def __init__(self):
         super().__init__()
@@ -86,11 +94,14 @@ class TestCmd(cmd.Cmd):
                 print('wakuep')
 
     def do_display(self,args):
-        print(self.yaml.keys())
-
-        for key in self.yaml.keys():
-            print("\033[33m ", self.yaml[key], "\033[0m")
-
+        for todos in self.yaml['Undone'].keys():
+            print(self.yaml['Undone'][todos])
+            items_left = len(self.yaml['Undone'][todos])
+            for item in self.yaml['Undone'][todos]:
+                if items_left > 2:
+                    print(CAUTION, item, END)
+                else:
+                    print(INFO, item, END)
 
 if __name__ == '__main__':
     cli = TestCmd()
