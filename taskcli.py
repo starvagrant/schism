@@ -40,6 +40,10 @@ class TestCmd(cmd.Cmd):
             self.yaml = yaml.load(f, Loader=yaml.FullLoader)
             print(repr(self.yaml))
 
+    def do_todo(self, args):
+        process = subprocess.run(['play', '~/Music/Bash/Victory/FF6-short.mp3'])
+        self.do_display('')
+
     def do_done(self,args):
         if "Undone" in self.yaml.keys() and "Done" in self.yaml.keys():
             print(args)
