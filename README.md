@@ -33,6 +33,8 @@ dependancies:
 Bash (it's a shell script)
 The _play_ command (from the Soxi package)
 The _ed_ text editor (often times installed by default on linux)
+_Python3_ I develop on 3.8.10 and don't guarantee it works on any
+other version.
 Some songs. The play feature needs manual selection of your own songs.
 
 I'm thinking of allowing the user to select between nano,ed,vim,and
@@ -45,3 +47,15 @@ making something I find useful for me here is the code. This code
 is meant to provide a focused and distractions free environment
 for it's user(s). So anyone thinks the have a handle on that, I
 am interested to see what you come up with.
+
+## Project Goals
+
+I've been developing in a rather peculiar manner. I'm using Bash
+to experiment with new features and then translating them into
+a series of structured command line interpreters using python's
+cmd module.
+
+The project also includes a number of mp3's that I'm not committing
+to the repo. An user is encourage to add whatever songs work best
+for them in the program. I find a song to be a particularly good
+way to tell the brain it needs to change direction.
