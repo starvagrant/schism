@@ -45,9 +45,6 @@ class TestCmd(cmd.Cmd):
             print(args)
             key = args.split()[0].lower().title()
             pos = int(args.split()[1])
-            command = CommandArgValidator("done", args)
-            print("The command is valid: " , command.is_valid())
-            print("Command error message: " , command.message)
             try:
                 task = self.yaml['Undone'][key].pop(pos)
                 if None in self.yaml['Done'][key]:
