@@ -36,3 +36,17 @@ then
     schism-ed ${@}
     exit 0
 fi
+
+if [ $1 == "rplay" ];
+then
+    shift
+    schism-rplay ${@}
+    exit 0
+fi
+
+if [ $1 == "task" ];
+then
+    cd ~/bin/schism-program
+    ~/bin/python/taskcli.py
+    exit 0
+fi
