@@ -72,6 +72,16 @@ class TestCmd(cmd.Cmd):
             print(repr(self.yaml))
 
     def do_play(self, args):
+        """
+        Play a helpful track repeatedly.
+        These Include:
+        game: a mash of Nintendo era soundtracks
+        venus: Gustav Holst's Venus Bringer of Peace
+        wakeup: FF7, Cloud's Motorcycle Sequence
+        clean: Warcraft II soundtrack, tracks 2-13
+        """
+
+
         arg = args.split(' ')
         print(arg)
         run_list = arg[0]
@@ -98,6 +108,9 @@ class TestCmd(cmd.Cmd):
             if arg[0] == 'wakeup':
                 process=subprocess.run(['play', '~/Music/Bash/wakeup.mp3'])
                 print('wakuep')
+            if arg[0] == 'clean':
+                process=subprocess.run(['play', '~/Music/Bash/Warcraft\\ II/*.ogg'])
+                print('clean')
 
     def do_display(self,args):
         for todos in self.yaml['Undone'].keys():

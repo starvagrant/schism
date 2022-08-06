@@ -56,3 +56,14 @@ play ~/Music/Bash/wakeup.mp3
 
 done
 fi
+
+if [ $1 == "malinche" ];
+then
+
+audiodisk=$(( $RANDOM % 5 ))
+cd /home/jginns/Libros\ En\ Español/Laura\ Esquivel/Malinche/Disk\ $audiodisk/
+lines=`ls *.mp3 | wc -l`
+cutlength=$((lines - $1))
+ls -Q *.mp3 | sort | tail -n $cutlength | xargs play
+
+fi
