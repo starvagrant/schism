@@ -19,6 +19,11 @@ class TestCmd(cmd.Cmd):
         super().__init__()
         self.yaml = []
 
+    def precmd(self, line):
+        with open('/home/jginns/.schism/taskcli_history', 'a') as f:
+            f.write(line + '\n')
+        return line
+
     def do_print(self, args):
         print(args)
 
