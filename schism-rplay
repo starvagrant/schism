@@ -1,0 +1,20 @@
+#!/bin/bash
+echo $#
+echo "$#"
+echo $@
+if [ $# -eq 0 ] 
+then
+    ROOT_DIR="~/.schism/play"
+else
+    ROOT_DIR="${@}"
+    #ROOT_DIR="$(echo ${@} | sed 's/ /\\ /g')"
+fi
+
+echo "$ROOT_DIR"
+find "$ROOT_DIR" -type f -name '*.mp3' -print -o -name '*.ogg' -print > rplayer.tmp
+sort -R --output=rplayer.tmp rplayer.tmp
+while read -r line
+do
+    echo $line
+    play "$line"
+done < rplayer.tmp
