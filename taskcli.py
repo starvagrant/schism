@@ -19,7 +19,7 @@ class TestCmd(cmd.Cmd):
 
     def __init__(self):
         super().__init__()
-        self.yaml = []
+        self.yaml = {}
         self.play_process = None
         self.play_pid = -1
 
@@ -28,9 +28,11 @@ class TestCmd(cmd.Cmd):
             f.write(line + '\n')
         return line
 
-    def yml_not_loaded(self):
-        if len(self.yml) == 0:
+    def yaml_not_loaded(self):
+        if len(self.yaml) == 0:
             return True
+        else:
+            return False
 
     def do_print(self, args):
         print(args)
@@ -55,7 +57,7 @@ class TestCmd(cmd.Cmd):
         self.do_display('')
 
     def do_done(self,args):
-        if self.yml_not_loaded:
+        if self.yaml_not_loaded():
             return
 
         if "Undone" in self.yaml.keys() and "Done" in self.yaml.keys():
@@ -122,7 +124,7 @@ class TestCmd(cmd.Cmd):
                 print('zero')
 
     def do_display(self,args):
-        if self.yml_not_loaded:
+        if self.yaml_not_loaded():
             return
 
         for todos in self.yaml['Undone'].keys():
