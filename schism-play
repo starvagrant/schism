@@ -1,69 +1,44 @@
 #!/bin/bash
 
-if [ $# -eq 0 ] || [ $1 == "game" ];
+home_dir='~/.schism/play'
+
+if [ $# -eq 0 ]
 then
 
 while true;
 do
-
-play ~/Music/Bash/BlasterMaster7.ogg
-play ~/Music/Bash/SuperMario3BowserBattle.mp3
-play ~/Music/Bash/WilyFortress.mp3
-
+    play "$home_dir/BlasterMaster7.ogg" "$home_dir/SuperMario3BowserBattle.mp3" "$home_dir/WilyFortress.mp3";
 done
 
 fi
 
-if [ $1 == "clean" ];
-then
-
-ls -Q ~/Music/Bash/Warcraft\ II/* | xargs play
-
-fi
-
-if [ $1 == "relax" ];
-then
-
-while true;
-do
-
-play ~/Music/Bash/relax.mp3
-
-done
-fi
-
-if [ $1 == "upbeat" ];
-then
-
-ls -Q ~/Music/Bash/Upbeat/*.mp3 | xargs play
-
-fi
-
-if [ $1 == "humor" ];
-then
-
-find -L ~/Music/Bash/Humor -name '*.mp3' -print0 | sort -Rz | xargs -0 play
-
-fi
-
-if [ $1 == "wakeup" ];
-then
-
-while true;
-do
-
-play ~/Music/Bash/wakeup.mp3
-
-done
-fi
-
-if [ $1 == "malinche" ];
-then
-
-audiodisk=$(( $RANDOM % 5 ))
-cd /home/jginns/Libros\ En\ Español/Laura\ Esquivel/Malinche/Disk\ $audiodisk/
-lines=`ls *.mp3 | wc -l`
-cutlength=$((lines - $1))
-ls -Q *.mp3 | sort | tail -n $cutlength | xargs play
-
-fi
+case $1 in
+    clean)
+        find ~/.schism/play/WarcraftII -name '*.ogg' -print0 | sort -z | xargs -0 play
+        ;;
+    relax)
+        while true; do play $home_dir/relax.mp3; done
+        ;;
+    upbeat)
+         ls -Q ~/.schism/play/Upbeat/*.mp3 | xargs play
+        ;;
+    humor)
+        find -L ~/.schism/play/Humor -name '*.mp3' -print0 | sort -Rz | xargs -0 play
+        ;;
+    wakeup)
+        while true; do play "$home_dir/wakeup.mp3"; done
+        ;;
+    victory)
+        ls ~/.schism/play/Victory/FF*.mp3 | sort -R | head -1 | xargs play
+        ;;
+    malinche)
+        audiodisk=$(( $RANDOM % 5 ))
+        cd /home/jginns/Libros\ En\ Español/Laura\ Esquivel/Malinche/Disk\ $audiodisk/
+        lines=`ls *.mp3 | wc -l`
+        cutlength=$((lines - $1))
+        ls -Q *.mp3 | sort | tail -n $cutlength | xargs play
+        ;;
+    *)
+        echo "current choices are: clean, relax, upbeat, humor, wakeup, and malinche"
+        ;;
+esac
