@@ -28,6 +28,10 @@ class TestCmd(cmd.Cmd):
             f.write(line + '\n')
         return line
 
+    def yml_not_loaded(self):
+        if len(self.yml) == 0:
+            return True
+
     def do_print(self, args):
         print(args)
 
@@ -39,9 +43,6 @@ class TestCmd(cmd.Cmd):
         print(arg_list)
         process = subprocess.run(arg_list, universal_newlines=True, stdout=subprocess.PIPE)
         print(process.stdout)
-        #process = subprocess.run(args, universal_newlines=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        #print(process.stdout)
-        #print(process.stderr)
 
     def do_load(self, args):
         #arg = args.split()[0];
@@ -50,10 +51,13 @@ class TestCmd(cmd.Cmd):
             print(repr(self.yaml))
 
     def do_todo(self, args):
-        process = subprocess.run(['play', '~/Music/Bash/Victory/FF6-short.mp3'])
+        process = subprocess.run(['play', '~/.schism/play/Victory/FF6-short.mp3'])
         self.do_display('')
 
     def do_done(self,args):
+        if self.yml_not_loaded:
+            return
+
         if "Undone" in self.yaml.keys() and "Done" in self.yaml.keys():
             print(args)
             key = args.split()[0].lower().title()
@@ -118,6 +122,9 @@ class TestCmd(cmd.Cmd):
                 print('zero')
 
     def do_display(self,args):
+        if self.yml_not_loaded:
+            return
+
         for todos in self.yaml['Undone'].keys():
             print(self.yaml['Undone'][todos])
             items_left = len(self.yaml['Undone'][todos])

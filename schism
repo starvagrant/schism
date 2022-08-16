@@ -23,30 +23,28 @@ then
 
 fi
 
-if [ $1 == "play" ];
-then
-    shift
-    schism-play ${@}
-    exit 0
-fi
-
-if [ $1 == "ed" ];
-then
-    shift
-    schism-ed ${@}
-    exit 0
-fi
-
-if [ $1 == "rplay" ];
-then
-    shift
-    schism-rplay ${@}
-    exit 0
-fi
-
-if [ $1 == "task" ];
-then
-    cd ~/bin/schism-program
-    ~/bin/python/taskcli.py
-    exit 0
-fi
+case $1 in
+    play)
+        shift
+        schism-play ${@}
+        exit 0
+        ;;
+    ed)
+        shift
+        schism-ed ${@}
+        exit 0
+        ;;
+    rplay)
+        shift
+        schism-rplay ${@}
+        exit 0
+        ;;
+    task)
+        cd ~/bin/schism-program
+        ~/bin/python/taskcli.py
+        exit 0
+        ;;
+    *)
+        echo "commands are play, rplay, ed, and task"
+        ;;
+esac
