@@ -14,11 +14,11 @@ then
     else
         mkdir ~/.schism
     fi
-    if [ -d ~/.schism/time ]
+    if [ -d ~/.schism/ed ]
     then
-        echo "~/.schism/time already exists"
+        echo "~/.schism/ed already exists"
     else
-        mkdir -p ~/.schism/time
+        mkdir -p ~/.schism/ed
     fi
 
 fi
