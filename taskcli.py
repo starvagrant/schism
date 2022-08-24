@@ -24,7 +24,8 @@ class TestCmd(cmd.Cmd):
         self.play_pid = -1
 
     def precmd(self, line):
-        with open('/home/jginns/.schism/taskcli_history', 'a') as f:
+        taskcli_history=os.path.expanduser('~/.schism/taskcli_history')
+        with open(taskcli_history, 'a') as f:
             f.write(line + '\n')
         return line
 
@@ -48,7 +49,9 @@ class TestCmd(cmd.Cmd):
 
     def do_load(self, args):
         #arg = args.split()[0];
-        with open('links/current.yml', 'r') as f:
+        yml_file = os.path.expanduser('~/.schism/links/current-todo.yml')
+        with open(yml_file, 'r') as f:
+
             self.yaml = yaml.load(f, Loader=yaml.FullLoader)
             print(repr(self.yaml))
 
@@ -77,7 +80,8 @@ class TestCmd(cmd.Cmd):
             print(self.yaml.keys())
 
     def do_write(self, args):
-        with open('links/current.yml', 'w') as f:
+        yml_file = os.path.expanduser('~/.schism/links/current-todo.yml')
+        with open(yml_file, 'w') as f:
             yaml.dump(self.yaml, f, Dumper=yaml.Dumper)
             print(repr(self.yaml))
 
@@ -96,6 +100,9 @@ class TestCmd(cmd.Cmd):
         if self.play_process is not None:
             self.play_process.kill()
         arg = args.split(' ')
+
+        music_dir = os.path.expanduser('~/.schism/play/')
+
         print(arg)
         run_list = arg[0]
         if len(arg) < 2:
@@ -105,22 +112,22 @@ class TestCmd(cmd.Cmd):
             print(arg)
         for x in range(int(arg[1])):
             if arg[0] == 'relax':
-                self.play_process=subprocess.Popen(['play', '~/Music/Bash/relax.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.play_process=subprocess.Popen(['play', music_dir + 'relax.mp3'], stderr=subprocess.DEVNULL)
                 print('relax!!')
             if arg[0] == 'game':
-                self.play_process=subprocess.Popen(['play', '~/Music/Bash/BlasterMaster7.ogg', '~/Music/Bash/SuperMario3BowserBattle.mp3', '~/Music/Bash/WilyFortress.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.play_process=subprocess.Popen(['play', music_dir + 'BlasterMaster7.ogg', music_dir + 'SuperMario3BowserBattle.mp3', music_dir + 'WilyFortress.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 print('Blaster SM3 Wily')
             if arg[0] == 'venus':
-                self.play_process = subprocess.Popen(['play', '~/Music/Bash/venus.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.play_process = subprocess.Popen(['play', music_dir + 'venus.mp3'], stderr=subprocess.DEVNULL)
                 print('Venus')
             if arg[0] == 'wakeup':
-                self.play_process = subprocess.Popen(['play', '~/Music/Bash/wakeup.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.play_process = subprocess.Popen(['play', music_dir + 'wakeup.mp3'], stderr=subprocess.DEVNULL)
                 print('wakuep')
             if arg[0] == 'clean':
-                self.play_process=subprocess.Popen(['play', '~/Music/Bash/Warcraft\\ II/*.ogg'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.play_process=subprocess.Popen(['play', music_dir + 'WarcraftII/*.ogg'], stderr=subprocess.DEVNULL)
                 print('clean')
             if arg[0] == 'zero':
-                self.play_process=subprocess.Popen(['play', '~/Music/Bash/zero.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                self.play_process=subprocess.Popen(['play', music_dir + 'zero.mp3'], stderr=subprocess.DEVNULL)
                 print('zero')
 
     def do_display(self,args):
