@@ -1,15 +1,20 @@
 #!/bin/bash
-
-cd ~/.schism/time
+date="`date +%Y-%m-%d`"
 
 if [ $# -eq 0 ]
 then
     ed "freewrite-`date`.txt"
+
 elif [ $1 == "todo" ]
 then
-    date="`date +%Y-%m-%d`"
-    cp ~/.schism/time/templates/todo.yml ~/.schism/time/todo$date.yml
-    ed ~/.schism/time/todo$date.yml
+    cp ~/.schism/ed/templates/todo.yml ~/.schism/ed/todo/todo$date.yml
+    ed ~/.schism/ed/todo/todo$date.yml
+
+elif [ $1 == "reflection" ]
+then
+    cp ~/.schism/ed/templates/reflection.yml ~/.schism/ed/reflection/reflection$date.yml
+    ed ~/.schism/ed/reflection/reflection$date.yml
+
 else
     ed ${@}
 fi
