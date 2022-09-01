@@ -7,12 +7,19 @@ then
 
 elif [ $1 == "todo" ]
 then
-    cp ~/.schism/ed/templates/todo.yml ~/.schism/ed/todo/todo$date.yml
+    if [ ! -f ~/.schism/ed/todo/todo$date.yml ]
+    then
+        cp ~/.schism/ed/templates/todo.yml ~/.schism/ed/todo/todo$date.yml
+    fi
     ed ~/.schism/ed/todo/todo$date.yml
 
 elif [ $1 == "reflection" ]
 then
-    cp ~/.schism/ed/templates/reflection.yml ~/.schism/ed/reflection/reflection$date.yml
+    if [ ! -f ~/.schism/ed/reflection/reflection$date.yml ]
+    then
+        echo "~/.schism/ed/reflection/reflection$date.yml"
+        cp ~/.schism/ed/templates/reflection.yml ~/.schism/ed/reflection/reflection$date.yml
+    fi
     ed ~/.schism/ed/reflection/reflection$date.yml
 
 else
