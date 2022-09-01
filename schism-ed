@@ -22,6 +22,14 @@ then
     fi
     ed ~/.schism/ed/reflection/reflection$date.yml
 
+elif [ $1 == "pitch" ]
+then
+    if [ ! -f ~/.schism/ed/pitch/pitch$date.yml ]
+    then
+        cp ~/.schism/ed/templates/pitch.yml ~/.schism/ed/pitch/pitch$date.yml
+    fi
+    ed ~/.schism/ed/pitch/pitch$date.yml
+
 else
     ed ${@}
 fi
