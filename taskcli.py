@@ -5,6 +5,7 @@ import subprocess
 import yaml
 import os
 import signal
+import time
 
 DANGER = "\033[31m"     #red
 CAUTION = "\033[33m"    #yellow
@@ -25,8 +26,10 @@ class TestCmd(cmd.Cmd):
 
     def precmd(self, line):
         taskcli_history=os.path.expanduser('~/.schism/taskcli_history')
+        timestamp=str(int(time.time()))
         with open(taskcli_history, 'a') as f:
             f.write(line + '\n')
+            f.write('#' + timestamp + '\n')
         return line
 
     def yaml_not_loaded(self):
@@ -142,6 +145,19 @@ class TestCmd(cmd.Cmd):
                     print(CAUTION, item, END)
                 else:
                     print(INFO, item, END)
+
+    def do_scan(self,args):
+        arg = args.split(' ')
+        if len(arg) < 2:
+            year=2022
+        for entry in os.scandir(os.path.expanduser('~/.schism/time/')):
+            if entry.is_file:
+                if entry.name.startswith('todo' + str(year)) and entry.name.endswith('.yml'):
+                    print(entry.name)
+
+    def do_link(self,args):
+        print('link a new file here!')
+
 
 if __name__ == '__main__':
     cli = TestCmd()
