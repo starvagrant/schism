@@ -25,7 +25,7 @@ class TestCmd(cmd.Cmd):
         self.play_pid = -1
 
     def precmd(self, line):
-        taskcli_history=os.path.expanduser('~/.schism/taskcli_history')
+        taskcli_history=os.path.expanduser('~/.schism/history/taskcli_history')
         timestamp=str(int(time.time()))
         with open(taskcli_history, 'a') as f:
             f.write(line + '\n')

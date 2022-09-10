@@ -2,8 +2,9 @@
 
 if [ -d ~/.schism ]
 then
-echo "$(basename ${0}) ${@}" >> ~/.schism/schism_history
-echo "#" $(date +%s) >> ~/.schism/schism_history
+echo "$(basename ${0}) ${@}" >> ~/.schism/history/schism_history
+echo "#" $(date +%s) >> ~/.schism/history/schism_history
+
 fi
 
 if [ $1 == "init" ];
@@ -20,7 +21,12 @@ then
     else
         mkdir -p ~/.schism/ed
     fi
-
+    if [ -d ~/.schism/history ]
+    then
+        echo "~/.schism/history already exists"
+    else
+        mkdir -p ~/.schism/history
+    fi
 fi
 
 case $1 in
