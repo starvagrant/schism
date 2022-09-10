@@ -75,6 +75,12 @@ class TestCmd(cmd.Cmd):
                 if None in self.yaml['Done'][key]:
                     self.yaml['Done'][key].pop(0)
                 self.yaml['Done'][key].append(task)
+                hist_file = os.path.expanduser('~/.schism/history/taskdone_history')
+                with open(hist_file, 'a') as f:
+                    timestamp=str(int(time.time()))
+                    f.write(task + '\n')
+                    f.write('#' + timestamp + '\n')
+
             except IndexError:
                 print ("Undone list",key," does not contain ", pos + 1 , "items")
             print(repr(self.yaml))
