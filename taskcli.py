@@ -23,6 +23,8 @@ class TestCmd(cmd.Cmd):
         self.yaml = {}
         self.play_process = None
         self.play_pid = -1
+        self.yml_file = ''
+        self.direntry = []
 
     def precmd(self, line):
         taskcli_history=os.path.expanduser('~/.schism/history/taskcli_history')
@@ -50,13 +52,29 @@ class TestCmd(cmd.Cmd):
         process = subprocess.run(arg_list, universal_newlines=True, stdout=subprocess.PIPE)
         print(process.stdout)
 
-    def do_load(self, args):
-        #arg = args.split()[0];
-        yml_file = os.path.expanduser('~/.schism/links/current-todo.yml')
-        with open(yml_file, 'r') as f:
+    def do_ls(self, args):
+        yml_dir = os.path.expanduser('~/.schism/ed/todo/')
+        dir_content = os.scandir(yml_dir)
+        self.direntry = []
+        for entry in dir_content:
+            self.direntry.append(entry)
 
-            self.yaml = yaml.load(f, Loader=yaml.FullLoader)
-            print(repr(self.yaml))
+        for entry in self.direntry:
+            print(entry.name)
+
+    def do_load(self, args):
+        yml_dir = os.path.expanduser('~/.schism/ed/todo/')
+        arg = args.split()
+        try:
+            self.yml_file = yml_dir + arg[0]
+            with open(self.yml_file, 'r') as f:
+                self.yaml = yaml.load(f, Loader=yaml.SafeLoader)
+                print(repr(self.yaml))
+
+        except FileNotFoundError:
+            self.yml_file = ''
+            print(arg[0] + " not found in " + yml_dir)
+            print("type ls for list of files")
 
     def do_todo(self, args):
         process = subprocess.run(['play', '~/.schism/play/Victory/FF6-short.mp3'])
@@ -89,10 +107,15 @@ class TestCmd(cmd.Cmd):
             print(self.yaml.keys())
 
     def do_write(self, args):
-        yml_file = os.path.expanduser('~/.schism/links/current-todo.yml')
-        with open(yml_file, 'w') as f:
-            yaml.dump(self.yaml, f, Dumper=yaml.Dumper)
-            print(repr(self.yaml))
+        try:
+            with open(self.yml_file, 'w') as f:
+                yaml.dump(self.yaml, f, Dumper=yaml.Dumper)
+                print(repr(self.yaml))
+
+        except FileNotFoundError:
+            print('No File is Loaded')
+            print('Type ls for list of files.')
+
 
     def do_play(self, args):
         """
