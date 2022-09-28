@@ -46,12 +46,6 @@ class TestCmd(cmd.Cmd):
     def do_quit(self,args):
         return True
 
-    def do_bash(self, args):
-        arg_list = args.split(" ")
-        print(arg_list)
-        process = subprocess.run(arg_list, universal_newlines=True, stdout=subprocess.PIPE)
-        print(process.stdout)
-
     def do_ls(self, args):
         yml_dir = os.path.expanduser('~/.schism/ed/todo/')
         dir_content = os.scandir(yml_dir)
@@ -138,52 +132,6 @@ class TestCmd(cmd.Cmd):
             print('No File is Loaded')
             print('Type ls for list of files.')
 
-
-    def do_play(self, args):
-        """
-        play <name> <times>
-        Play a helpful track repeatedly.
-        These Include:
-        game: a mash of Nintendo era soundtracks
-        venus: Gustav Holst's Venus Bringer of Peace
-        wakeup: FF7, Cloud's Motorcycle Sequence
-        clean: Warcraft II soundtrack, tracks 2-13
-        zero: almost null mp3 (stops current track)
-        """
-
-        if self.play_process is not None:
-            self.play_process.kill()
-        arg = args.split(' ')
-
-        music_dir = os.path.expanduser('~/.schism/play/')
-
-        print(arg)
-        run_list = arg[0]
-        if len(arg) < 2:
-            arg.append(1)
-            print(arg)
-        else:
-            print(arg)
-        for x in range(int(arg[1])):
-            if arg[0] == 'relax':
-                self.play_process=subprocess.Popen(['play', music_dir + 'relax.mp3'], stderr=subprocess.DEVNULL)
-                print('relax!!')
-            if arg[0] == 'game':
-                self.play_process=subprocess.Popen(['play', music_dir + 'BlasterMaster7.ogg', music_dir + 'SuperMario3BowserBattle.mp3', music_dir + 'WilyFortress.mp3'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                print('Blaster SM3 Wily')
-            if arg[0] == 'venus':
-                self.play_process = subprocess.Popen(['play', music_dir + 'venus.mp3'], stderr=subprocess.DEVNULL)
-                print('Venus')
-            if arg[0] == 'wakeup':
-                self.play_process = subprocess.Popen(['play', music_dir + 'wakeup.mp3'], stderr=subprocess.DEVNULL)
-                print('wakuep')
-            if arg[0] == 'clean':
-                self.play_process=subprocess.Popen(['play', music_dir + 'WarcraftII/*.ogg'], stderr=subprocess.DEVNULL)
-                print('clean')
-            if arg[0] == 'zero':
-                self.play_process=subprocess.Popen(['play', music_dir + 'zero.mp3'], stderr=subprocess.DEVNULL)
-                print('zero')
-
     def do_display(self,args):
         if self.yaml_not_loaded():
             return
@@ -196,19 +144,6 @@ class TestCmd(cmd.Cmd):
                     print(CAUTION, item, END)
                 else:
                     print(INFO, item, END)
-
-    def do_scan(self,args):
-        arg = args.split(' ')
-        if len(arg) < 2:
-            year=2022
-        for entry in os.scandir(os.path.expanduser('~/.schism/time/')):
-            if entry.is_file:
-                if entry.name.startswith('todo' + str(year)) and entry.name.endswith('.yml'):
-                    print(entry.name)
-
-    def do_link(self,args):
-        print('link a new file here!')
-
 
 if __name__ == '__main__':
     cli = TestCmd()
