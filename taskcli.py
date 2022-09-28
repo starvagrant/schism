@@ -136,14 +136,35 @@ class TestCmd(cmd.Cmd):
         if self.yaml_not_loaded():
             return
 
-        for todos in self.yaml['Undone'].keys():
-            print(self.yaml['Undone'][todos])
-            items_left = len(self.yaml['Undone'][todos])
-            for item in self.yaml['Undone'][todos]:
-                if items_left > 2:
-                    print(CAUTION, item, END)
-                else:
-                    print(INFO, item, END)
+        if args == "" or args.lower() == "undone":
+            for todos in self.yaml['Undone'].keys():
+                print(self.yaml['Undone'][todos])
+                items_left = len(self.yaml['Undone'][todos])
+                for item in self.yaml['Undone'][todos]:
+                    if items_left > 2:
+                        print(CAUTION, item, END)
+                    else:
+                        print(INFO, item, END)
+
+        if args.lower() == "done":
+            for todos in self.yaml['Done'].keys():
+                print(self.yaml['Done'][todos])
+                items_left = len(self.yaml['Done'][todos])
+                for item in self.yaml['Done'][todos]:
+                    if items_left > 2:
+                        print(CAUTION, item, END)
+                    else:
+                        print(INFO, item, END)
+
+        if args.lower() == "defer":
+            for todos in self.yaml['Defer'].keys():
+                print(self.yaml['Defer'][todos])
+                items_left = len(self.yaml['Defer'][todos])
+                for item in self.yaml['Defer'][todos]:
+                    if items_left > 2:
+                        print(CAUTION, item, END)
+                    else:
+                        print(INFO, item, END)
 
 if __name__ == '__main__':
     cli = TestCmd()
