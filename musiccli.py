@@ -46,7 +46,6 @@ class TestCmd(cmd.Cmd):
 
     def do_play(self, args):
         music_dir = os.path.expanduser('~/.schism/play/')
-        print(os.path.expanduser)
         subprocess.Popen(['play', music_dir + "BlasterMaster7.ogg"], stderr=subprocess.DEVNULL)
 
     def do_ls(self,args):
@@ -62,7 +61,7 @@ class TestCmd(cmd.Cmd):
             with open(yml_dir + arg[0], 'r') as f:
                 text=f.read()
 
-            self.playlist_yml=yaml.load(text, Loader=yaml.BaseLoader)
+            self.playlist_yml=yaml.load(text, Loader=yaml.Loader)
 
         except FileNotFoundError:
             print("No file by name ", arg[0], " in ", yml_dir)
@@ -70,6 +69,7 @@ class TestCmd(cmd.Cmd):
     def do_playlist(self,args):
         play_dir = self.playlist_yml['directory']
         message = self.playlist_yml['message']
+
         if self.playlist_yml['repeat'] is False:
             if self.playlist_yml['random'] is True:
                 shuffle(self.playlist_yml['file'])
@@ -79,7 +79,6 @@ class TestCmd(cmd.Cmd):
             while True: 
                 if self.playlist_yml['random'] is True:
                     shuffle(self.playlist_yml['file'])
-                    print(self.playlist_yml)
                 for song_file in self.playlist_yml['file']:
                     self.play_song(play_dir, song_file, message)
                     
