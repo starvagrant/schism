@@ -5,6 +5,7 @@ import subprocess
 import yaml
 import os
 import time
+from random import shuffle
 
 DANGER = "\033[31m"     #red
 CAUTION = "\033[33m"    #yellow
@@ -30,10 +31,23 @@ class TestCmd(cmd.Cmd):
             f.write('#' + timestamp + '\n')
         return line
 
+    def record_song(self,song):
+        song_history=os.path.expanduser('~/.schism/history/song_history')
+        timestamp=str(int(time.time()))
+        with open(song_history, 'a') as f:
+            f.write(song + '\n')
+            f.write('#' + timestamp + '\n')
+
+    def play_song(self,directory, song, message=""):
+        self.record_song(song)
+        self.play_process = subprocess.Popen(['play', directory + song], stderr=subprocess.DEVNULL)
+        print(message)
+        self.play_process.wait()
+
     def do_play(self, args):
         music_dir = os.path.expanduser('~/.schism/play/')
         print(os.path.expanduser)
-        subprocess.Popen(['play', music_dir + "BlasterMaster7.ogg"], stderr=subprocess.PIPE)
+        subprocess.Popen(['play', music_dir + "BlasterMaster7.ogg"], stderr=subprocess.DEVNULL)
 
     def do_ls(self,args):
         yml_dir = os.path.expanduser('~/.schism/play/playlists/')
@@ -54,13 +68,21 @@ class TestCmd(cmd.Cmd):
             print("No file by name ", arg[0], " in ", yml_dir)
 
     def do_playlist(self,args):
-        print(self.playlist_yml)
         play_dir = self.playlist_yml['directory']
-        for song_file in self.playlist_yml['file']:
-            self.play_process = subprocess.Popen(['play', play_dir + song_file], stderr=subprocess.PIPE)
-            print(self.playlist_yml['message'])
-            self.play_process.wait()
-
+        message = self.playlist_yml['message']
+        if self.playlist_yml['repeat'] is False:
+            if self.playlist_yml['random'] is True:
+                shuffle(self.playlist_yml['file'])
+            for song_file in self.playlist_yml['file']:
+                self.play_song(play_dir, song_file, message)
+        else:
+            while True: 
+                if self.playlist_yml['random'] is True:
+                    shuffle(self.playlist_yml['file'])
+                    print(self.playlist_yml)
+                for song_file in self.playlist_yml['file']:
+                    self.play_song(play_dir, song_file, message)
+                    
     def do_quit(self,args):
         return True
 
