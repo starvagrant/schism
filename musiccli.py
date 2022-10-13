@@ -45,8 +45,14 @@ class TestCmd(cmd.Cmd):
         self.play_process.wait()
 
     def do_play(self, args):
-        music_dir = os.path.expanduser('~/.schism/play/')
-        subprocess.Popen(['play', music_dir + "BlasterMaster7.ogg"], stderr=subprocess.DEVNULL)
+        arg = args.split()
+        if arg == []:
+            music_dir = os.path.expanduser('~/.schism/play/')
+            self.play_song(music_dir, "BlasterMaster7.ogg", "Type ls for list of playlists")
+            subprocess.Popen(['play', music_dir + "BlasterMaster7.ogg"], stderr=subprocess.DEVNULL)
+        else:
+            self.do_load(arg[0])
+            self.do_playlist('')
 
     def do_ls(self,args):
         yml_dir = os.path.expanduser('~/.schism/play/playlists/')
@@ -57,6 +63,8 @@ class TestCmd(cmd.Cmd):
     def do_load(self,args):
         yml_dir = os.path.expanduser('~/.schism/play/playlists/')
         arg = args.split()
+        if arg[0][-3:] != '.yml':
+            arg[0] += '.yml'
         try:
             with open(yml_dir + arg[0], 'r') as f:
                 text=f.read()
