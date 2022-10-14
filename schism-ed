@@ -1,5 +1,7 @@
 #!/bin/bash
 date="`date +%Y-%m-%d`"
+month="$(date +%m)"
+day="$(date +%a)"
 
 if [ $# -eq 0 ]
 then
@@ -9,18 +11,18 @@ elif [ $1 == "todo" ]
 then
     if [ ! -f ~/.schism/ed/todo/todo$date.yml ]
     then
-        cp ~/.schism/ed/templates/todo.yml ~/.schism/ed/todo/todo$date.yml
+        cp ~/.schism/ed/templates/todo-$day.yml ~/.schism/ed/todo/todo$date.yml
     fi
     ed ~/.schism/ed/todo/todo$date.yml
 
 elif [ $1 == "reflection" ]
 then
-    if [ ! -f ~/.schism/ed/reflection/reflection$date.yml ]
+    if [ ! -f ~/.schism/ed/reflection/reflection$date.tex ]
     then
-        echo "~/.schism/ed/reflection/reflection$date.yml"
-        cp ~/.schism/ed/templates/reflection.yml ~/.schism/ed/reflection/reflection$date.yml
+        echo "~/.schism/ed/reflection/reflection$date.tex"
+        cp ~/.schism/ed/templates/reflection.tex ~/.schism/ed/reflection/reflection$date.tex
     fi
-    ed ~/.schism/ed/reflection/reflection$date.yml
+    ed ~/.schism/ed/reflection/reflection$date.tex
 
 elif [ $1 == "pitch" ]
 then
@@ -30,6 +32,13 @@ then
     fi
     ed ~/.schism/ed/pitch/pitch$date.yml
 
+elif [ $1 == "schedule" ]
+then
+    if [ ! -f ~/.schism/ed/schedule/schedule$month.yml ]
+    then
+        cp ~/.schism/ed/templates/schedule.yml ~/.schism/ed/schedule/schedule$month.yml
+    fi
+    ed ~/.schism/ed/schedule/schedule$month.yml
 else
     ed ${@}
 fi
