@@ -26,10 +26,17 @@ case $1 in
         find -L ~/.schism/play/Humor -name '*.mp3' -print0 | sort -Rz | xargs -0 play
         ;;
     wakeup)
-        while true; do play "$home_dir/wakeup.mp3"; done
+        while true
+            do
+                play "$home_dir/wakeup.mp3"
+                echo -e $(cat ~/.schism/reminders/wakeup.txt)
+            done
         ;;
     victory)
         ls ~/.schism/play/Victory/FF*.mp3 | sort -R | head -1 | xargs play
+        ;;
+    sleep)
+        while true; do play $home_dir/sleep.mp3; done
         ;;
     malinche)
         audiodisk=$(( $RANDOM % 5 ))
@@ -39,6 +46,6 @@ case $1 in
         ls -Q *.mp3 | sort | tail -n $cutlength | xargs play
         ;;
     *)
-        echo "current choices are: clean, relax, upbeat, humor, wakeup, and malinche"
+        echo "current choices are: clean, relax, upbeat, humor, wakeup, sleep, and malinche"
         ;;
 esac
