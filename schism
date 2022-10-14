@@ -50,7 +50,12 @@ case $1 in
         ~/bin/python/taskcli.py
         exit 0
         ;;
+    music)
+        cd ~/bin/schism-program
+        ~/bin/python/musiccli.py
+        exit 0
+        ;;
     *)
-        echo "commands are play, rplay, ed, and task"
+        echo "commands are play, rplay, ed, task, and music"
         ;;
 esac
