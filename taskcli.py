@@ -4,7 +4,6 @@ import cmd
 import subprocess
 import yaml
 import os
-import signal
 import time
 
 DANGER = "\033[31m"     #red
@@ -21,8 +20,6 @@ class TestCmd(cmd.Cmd):
     def __init__(self):
         super().__init__()
         self.yaml = {}
-        self.play_process = None
-        self.play_pid = -1
         self.yml_file = ''
         self.direntry = []
 
@@ -56,6 +53,9 @@ class TestCmd(cmd.Cmd):
         for entry in self.direntry:
             print(entry.name)
 
+        for entry in os.scandir(yml_dir):
+            print(entry.name)
+
     def do_load(self, args):
         yml_dir = os.path.expanduser('~/.schism/ed/todo/')
         arg = args.split()
@@ -69,6 +69,9 @@ class TestCmd(cmd.Cmd):
             self.yml_file = ''
             print(arg[0] + " not found in " + yml_dir)
             print("type ls for list of files")
+
+        except IndexError:
+            print("No file specified. Use ls command to view files")
 
     def do_todo(self, args):
         process = subprocess.run(['play', '~/.schism/play/Victory/FF6-short.mp3'])
@@ -165,6 +168,14 @@ class TestCmd(cmd.Cmd):
                         print(CAUTION, item, END)
                     else:
                         print(INFO, item, END)
+
+    def do_queue(self, args):
+        for todo in self.yaml['Undone'].keys():
+            try:
+                print(todo, ": ", self.yaml['Undone'][todo][0])
+            except IndexError:
+                pass
+
 
 if __name__ == '__main__':
     cli = TestCmd()
