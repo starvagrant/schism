@@ -53,7 +53,7 @@ class TestCmd(cmd.Cmd):
         for entry in self.direntry:
             print(entry.name)
 
-        for entry in os.scandir(yml_dir)
+        for entry in os.scandir(yml_dir):
             print(entry.name)
 
     def do_load(self, args):
