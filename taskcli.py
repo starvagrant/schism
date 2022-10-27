@@ -169,6 +169,14 @@ class TestCmd(cmd.Cmd):
                     else:
                         print(INFO, item, END)
 
+    def do_queue(self, args):
+        for todo in self.yaml['Undone'].keys():
+            try:
+                print(todo, ": ", self.yaml['Undone'][todo][0])
+            except IndexError:
+                pass
+
+
 if __name__ == '__main__':
     cli = TestCmd()
     cli.cmdloop()
