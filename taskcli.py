@@ -168,6 +168,9 @@ class TestCmd(cmd.Cmd):
                         print(INFO, item, END)
 
     def do_queue(self, args):
+        if self.yaml_not_loaded():
+            return
+
         for todo in self.yaml['Undone'].keys():
             try:
                 print(todo, ": ", self.yaml['Undone'][todo][0])
