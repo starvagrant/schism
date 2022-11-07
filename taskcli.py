@@ -177,6 +177,26 @@ class TestCmd(cmd.Cmd):
             except IndexError:
                 pass
 
+    def do_progress(self, args):
+        if self.yaml_not_loaded():
+            return
+
+        if "Undone" in self.yaml.keys():
+            print(args)
+            key = args.split()[0].lower().title()
+            pos = int(args.split()[1])
+            try:
+               task = self.yaml['Undone'][key].pop(pos)
+               halfway = len(self.yaml['Undone'][key]) // 2
+               self.yaml['Undone'][key].insert(halfway, task)
+               hist_file = os.path.expanduser('~/.schism/history/taskinprogress_history')
+               with open(hist_file, 'a') as f:
+                   timestamp=str(int(time.time()))
+                   f.write(task + '\n')
+
+            except IndexError:
+                print ("Undone list",key," does not contain ", pos + 1 , "items")
+            print(repr(self.yaml))
 
 if __name__ == '__main__':
     cli = TestCmd()
