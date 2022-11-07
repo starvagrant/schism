@@ -107,7 +107,7 @@ class TestCmd(cmd.Cmd):
         if self.yaml_not_loaded():
             return
 
-        if "Undone" in self.yaml.keys() and "Defer" in self.yaml.keys():
+        if "Undone" in self.yaml.keys():
             print(args)
             key = args.split()[0].lower().title()
             pos = int(args.split()[1])
