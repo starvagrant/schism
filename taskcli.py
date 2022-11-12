@@ -198,6 +198,28 @@ class TestCmd(cmd.Cmd):
                 print ("Undone list",key," does not contain ", pos + 1 , "items")
             print(repr(self.yaml))
 
+    def do_refresh(self, args):
+        if self.yaml_not_loaded():
+            return
+
+        undone_key = args.split()[0].lower().title()
+        yaml_dir = os.path.expanduser('~/.schism/ed/todo/')
+        yaml_file = undone_key + ".yml"
+        try:
+            with open(yaml_dir + yaml_file, 'r') as f:
+                text = f.read()
+
+            task_list = yaml.load(text, Loader=yaml.Loader)
+
+        except FileNotFoundError:
+            print(yaml_dir + yaml_file + " does not exist.")
+            return
+
+        if undone_key in self.yaml['Undone'].keys():
+            for task in task_list:
+                if task is not in self.yaml['Undone'][undone_key]:
+                    self.yaml['Undone'][undone_key].append(task)
+
 if __name__ == '__main__':
     cli = TestCmd()
     cli.cmdloop()
